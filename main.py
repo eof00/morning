@@ -21,8 +21,11 @@ template_id = os.environ["TEMPLATE_ID"]
 def get_weather():
  url = "https://api.seniverse.com/v3/weather/daily.json?key=SIjoFrxMZmH7ilWpq&location="+ city+"&language=zh-Hans&unit=c&start=-1&days=1"
 #   https://api.seniverse.com/v3/weather/daily.json?key=SIjoFrxMZmH7ilWpq&location=  CITY  &language=zh-Hans&unit=c&start=-1&days=1
-  res = requests.get(url).json()
-  weather = res['results']['location'][1]
+
+  res = requests.get(url)
+  data = res.json()["results"]
+
+  weather = data[0]['now']
   return weather['text_day'], math.floor(weather['high'])
 
 # def get_count():
@@ -35,14 +38,14 @@ def get_weather():
 #     next = next.replace(year=next.year + 1)
 #   return (next - today).days
 
-def get_words():
-  words = requests.get("https://api.shadiao.pro/chp")
-  if words.status_code != 200:
-    return get_words()
-  return words.json()['data']['text']
+# def get_words():
+#   words = requests.get("https://api.shadiao.pro/chp")
+#   if words.status_code != 200:
+#     return get_words()
+#   return words.json()['data']['text']
 
-def get_random_color():
-  return "#%06x" % random.randint(0, 0xFFFFFF)
+# def get_random_color():
+#   return "#%06x" % random.randint(0, 0xFFFFFF)
 
 
 client = WeChatClient(app_id, app_secret)
