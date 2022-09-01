@@ -19,10 +19,11 @@ template_id = os.environ["TEMPLATE_ID"]
 
 
 def get_weather():
-  url = "http://autodev.openspeech.cn/csp/api/v2.1/weather?openId=aiuicus&clientType=android&sign=android&city=" + city
+ url = "https://api.seniverse.com/v3/weather/daily.json?key=SIjoFrxMZmH7ilWpq&location="+ city+"&language=zh-Hans&unit=c&start=-1&days=1"
+#   https://api.seniverse.com/v3/weather/daily.json?key=SIjoFrxMZmH7ilWpq&location=  CITY  &language=zh-Hans&unit=c&start=-1&days=1
   res = requests.get(url).json()
-  weather = res['data']['list'][0]
-  return weather['weather'], math.floor(weather['temp'])
+  weather = res['results']['location'][1]
+  return weather['text_day'], math.floor(weather['high'])
 
 # def get_count():
 #   delta = today - datetime.strptime(start_date, "%Y-%m-%d")
